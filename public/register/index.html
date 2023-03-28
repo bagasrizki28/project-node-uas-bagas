@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="register">
+      Nama lengkap
+      <input type="text" name="nana_lengkap" />
+      <br />
+      Email
+      <input type="email" name="email" />
+      <br />
+      Password
+      <input type="password" name="password" />
+      <br />
+      No HP
+      <input type="number" name="no_hp" />
+      <br />
+      Alamat
+      <input type="text" name="alamat" />
+      <br />
+      <button>Daftar!</button>
+    </form>
+
+    <script>
+      document.register.onsubmit = async (e) => {
+        e.preventDefault();
+        const nana_lengkap = document.register.nana_lengkap.value;
+        const email = document.register.email.value;
+        const password = document.register.password.value;
+        const no_hp = document.register.no_hp.value;
+        const alamat = document.register.alamat.value;
+
+        await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            nana_lengkap,
+            email,
+            password,
+            no_hp,
+            alamat,
+          }),
+        });
+        // location.href = "/dashboard/infobooking/index.html";
+      };
+    </script>
+  </body>
+</html>
