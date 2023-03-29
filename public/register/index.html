@@ -9,7 +9,7 @@
   <body>
     <form name="register">
       Nama lengkap
-      <input type="text" name="nana_lengkap" />
+      <input type="text" name="namaLengkap" />
       <br />
       Email
       <input type="email" name="email" />
@@ -18,7 +18,7 @@
       <input type="password" name="password" />
       <br />
       No HP
-      <input type="number" name="no_hp" />
+      <input type="number" name="noHp" />
       <br />
       Alamat
       <input type="text" name="alamat" />
@@ -29,23 +29,22 @@
     <script>
       document.register.onsubmit = async (e) => {
         e.preventDefault();
-        const nana_lengkap = document.register.nana_lengkap.value;
+        const namaLengkap = document.register.namaLengkap.value;
         const email = document.register.email.value;
         const password = document.register.password.value;
-        const no_hp = document.register.no_hp.value;
+        const noHp = document.register.noHp.value;
         const alamat = document.register.alamat.value;
 
         await fetch("/api/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({
-            nana_lengkap,
+            namaLengkap,
             email,
             password,
-            no_hp,
+            noHp,
             alamat,
           }),
         });

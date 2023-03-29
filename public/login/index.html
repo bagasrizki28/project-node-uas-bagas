@@ -6,5 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <form name="login">
+      Username
+      <input type="text" name="username" />
+      <br />
+
+      Password
+      <input type="password" name="pass" />
+
+      <button>Masuk!</button>
+    </form>
+
+    <script>
+      document.login.onsubmit = (e) => {
+        e.preventDefault();
+        const username = document.login.username.value;
+        const pass = document.login.pass.value;
+        fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            pass,
+          }),
+        }).then(async (response) => {
+          if (response.ok) {
+            const kontol = await response.text();
+            alert(kontol);
+            location.href = "../index.html";
+          } else {
+            const message = await response.text();
+            alert(message);
+          }
+        });
+      };
+    </script>
+  </body>
 </html>

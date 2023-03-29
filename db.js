@@ -7,7 +7,7 @@ const { Client } = pkg;
 
 export const client = new Client({
   host: "db.ncwtzjhseoqkyxuoqqmb.supabase.co",
-  // port: 5432,
+  port: 5432,
   user: "postgres",
   password: "bagasrizky123",
   database: "postgres",
