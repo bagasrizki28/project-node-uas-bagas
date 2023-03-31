@@ -34,8 +34,8 @@
           }),
         }).then(async (response) => {
           if (response.ok) {
-            const kontol = await response.text();
-            alert(kontol);
+            const x = await response.text();
+            alert(x);
             location.href = "../index.html";
           } else {
             const message = await response.text();

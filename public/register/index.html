@@ -8,8 +8,8 @@
   </head>
   <body>
     <form name="register">
-      Nama lengkap
-      <input type="text" name="namaLengkap" />
+      Username
+      <input type="text" name="username" />
       <br />
       Email
       <input type="email" name="email" />
@@ -29,7 +29,7 @@
     <script>
       document.register.onsubmit = async (e) => {
         e.preventDefault();
-        const namaLengkap = document.register.namaLengkap.value;
+        const username = document.register.username.value;
         const email = document.register.email.value;
         const password = document.register.password.value;
         const noHp = document.register.noHp.value;
@@ -41,7 +41,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            namaLengkap,
+            username,
             email,
             password,
             noHp,

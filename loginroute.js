@@ -1,5 +1,5 @@
 import express from "express";
-import { client } from "pg";
+import { client } from "./db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
