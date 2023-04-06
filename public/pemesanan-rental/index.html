@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="register.css" />
+    <link rel="stylesheet" type="text/css" href="pemesanan.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
@@ -21,42 +21,37 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <title>Daftar</title>
+    <title>Pemesanan Rental</title>
   </head>
   <body>
     <div class="container">
-      <div class="title">DAFTAR AKUN</div>
-      <form name="register">
+      <div class="title">Pemesanan Rental</div>
+      <form name="pemesananRental">
         <div class="inputfield">
-          <label>Username</label>
-          <input type="text" name="username" required />
+          <label>Tanggal Booking</label>
+          <input type="date" name="tanggalBooking" />
         </div>
 
         <div class="inputfield">
-          <label>Alamat Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="email123@email.com"
-            required
-          />
+          <label>Lama Hari</label>
+          <input type="text" name="lamaHari" />
         </div>
         <div class="inputfield">
-          <label>Password</label>
-          <input type="password" name="password" required />
+          <label>KTP</label>
+          <input type="text" name="kartuTanda" />
         </div>
         <div class="inputfield">
           <label>Nomor Telepon</label>
-          <input type="text" name="noHp" placeholder="0818XXXXXXXX" required />
+          <input type="text" name="noHp" placeholder="0818XXXXXXXX" />
         </div>
         <div class="inputfield">
-          <label>Alamat</label>
-          <textarea
-            name="alamat"
-            class="textarea"
-            placeholder="Masukkan Alamat"
-            required
-          ></textarea>
+          <label>Metode Pembayaran</label>
+          <input list="bayar" name="metodeBayar" required />
+          <datalist id="bayar">
+            <option value="Dana"></option>
+            <option value="Transfer Bank"></option>
+            <option value="Tunai"></option>
+          </datalist>
         </div>
         <div class="inputfield terms">
           <label class="check">
@@ -66,41 +61,39 @@
           <p>Menyetujui Syarat & Ketentuan.</p>
         </div>
         <div class="inputfield">
-          <button>Register</button>
+          <button>Pesan Sekarang!</button>
         </div>
 
         <div class="link">
-          <a class="logins" href="../login/index.html"
-            >Sudah punya akun? Log In!</a
-          >
           <a class="home" href="/">Kembali ke Beranda</a>
         </div>
       </form>
     </div>
 
     <script>
-      document.register.onsubmit = async (e) => {
+      document.pemesananRental.onsubmit = async (e) => {
         e.preventDefault();
-        const username = document.register.username.value;
-        const email = document.register.email.value;
-        const password = document.register.password.value;
-        const noHp = document.register.noHp.value;
-        const alamat = document.register.alamat.value;
 
-        await fetch("/api/register", {
+        const tanggalBooking = document.pemesananRental.tanggalBooking.value;
+        const lamaHari = document.pemesananRental.lamaHari.value;
+        const kartuTanda = document.pemesananRental.kartuTanda.value;
+        const noHp = document.pemesananRental.noHp.value;
+        const metodeBayar = document.pemesananRental.metodeBayar.value;
+
+        await fetch("/api/rental", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username,
-            email,
-            password,
+            tanggalBooking,
+            lamaHari,
+            kartuTanda,
             noHp,
-            alamat,
+            metodeBayar,
           }),
         });
-        location.href = "/";
+        location.href = "/detailbooking/index.html";
       };
     </script>
   </body>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Rental</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Rental Mobil</div>
+      <form name="pesanLangsung">
+        <div class="inputfield">
+          <label>Tahun</label>
+          <input type="text" name="tahun" disabled />
+        </div>
+        <div class="inputfield">
+          <label>Tipe Mobil</label>
+          <input type="text" name="tahun" disabled />
+        </div>
+
+        <div class="inputfield">
+          <label>Harga Perhari</label>
+          <input type="text" name="hargaPerhari" disabled />
+        </div>
+
+        <div class="inputfield">
+          <label>Tanggal Rental</label>
+          <input type="date" name="tglRental" />
+        </div>
+
+        <div class="inputfield">
+          <label>Lama Hari</label>
+          <input type="number" max="7" name="lamaHari" required />
+        </div>
+        <div class="inputfield">
+          <label>Nomor Telepon</label>
+          <input type="text" name="noHp" placeholder="0818XXXXXXXX" required />
+        </div>
+
+        <div class="inputfield">
+          <label>KTP</label>
+          <input type="text" name="kartuTanda" required />
+        </div>
+
+        <div class="inputfield">
+          <label>Alamat Saat Ini</label>
+          <input
+            type="text"
+            name="alamatSekarang"
+            placeholder="327XXXX"
+            required
+          />
+        </div>
+
+        <div class="inputfield terms">
+          <label class="check">
+            <input type="checkbox" required />
+            <span class="checkmark"></span>
+          </label>
+          <p>Menyetujui Syarat & Ketentuan.</p>
+        </div>
+        <div class="inputfield">
+          <button>Rental Sekarang!</button>
+        </div>
+
+        <div class="link">
+          <a class="home" href="/">Kembali ke Beranda</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const tglJemput = params.get("tglJemput");
+      const tglKembali = params.get("tglKembali");
+      const alamat = params.get("alamat");
+
+      const a = (document.pesanLangsung.alamat.value = alamat);
+      const b = (document.pesanLangsung.tanggalBerangkat.value = tglJemput);
+      const c = (document.pesanLangsung.tanggalPulang.value = tglKembali);
+
+      document.pesanLangsung.onsubmit = async (e) => {
+        e.preventDefault();
+        const d = document.pesanLangsung.jumlahPenumpang.value;
+        const f = document.pesanLangsung.noHp.value;
+
+        await fetch("/api/pesanLangsung", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            b,
+            c,
+            d,
+            f,
+            a,
+          }),
+        });
+        location.href = "../dashboard/index.html";
+      };
+    </script>
+  </body>
+</html>
+

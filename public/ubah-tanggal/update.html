@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Tanggal</title>
+    <link rel="stylesheet" type="text/css" href="update.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login">
+        <form name="edit" class="parent">
+          <h1>Update Pemberangkatan</h1>
+          <hr />
+          <p>BRC WEBSITE</p>
+          <label>Id Pemesanan</label>
+          <input name="id" type="number" disabled />
+          <label>Tanggal Jemput</label>
+          <input name="tanggal_jemput" type="date" required />
+          <label>Jml. Penumpang</label>
+          <input
+            name="jml_penumpang"
+            class="user-pass"
+            max="6"
+            type="number"
+            required
+          />
+          <button class="submiting">Ubah Data</button>
+          <a class="home" href="/">Kembali ke Beranda</a>
+        </form>
+      </div>
+
+      <div class="right">
+        <img src="../assets/img/car-red.png" alt="" />
+      </div>
+    </div>
+
+    <script>
+      const searchParams = new URLSearchParams(location.search);
+      fetch(`/api/booking/${searchParams.get("id")}`)
+        .then((response) => response.json())
+        .then((booking) => {
+          document.edit.id.value = booking.id;
+          document.edit.tanggal_jemput.value = booking.tanggal_jemput;
+          document.edit.jml_penumpang.value = booking.jml_penumpang;
+        });
+
+      document.querySelector("button").onclick = async (e) => {
+        e.preventDefault();
+        const id = document.edit.id.value;
+        const tanggal_jemput = document.edit.tanggal_jemput.value;
+        const jml_penumpang = document.edit.jml_penumpang.value;
+
+        await fetch(`/api/booking/${searchParams.get("id")}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            tanggal_jemput,
+            jml_penumpang,
+          }),
+        });
+        location.href = "/detailbooking";
+      };
+    </script>
+  </body>
+</html>

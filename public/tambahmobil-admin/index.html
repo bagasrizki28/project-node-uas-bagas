@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tambah Mobil</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Tambah Mobil</div>
+      <form name="tambahMobil">
+        <div class="inputfield">
+          <label>Tahun</label>
+          <input type="number" name="tahun" placeholder="Tahun Keluaran" />
+        </div>
+
+        <div class="inputfield">
+          <label>Tipe</label>
+          <input type="text" name="tipe" placeholder="Tipe Mobil" />
+        </div>
+
+        <div class="inputfield">
+          <label>Harga Perhari</label>
+          <input type="number" name="hargaPerhari" placeholder="Rp. " />
+        </div>
+
+        <div class="inputfield">
+          <label>Detail Foto</label>
+          <input type="file" name="photo" />
+        </div>
+
+        <div class="inputfield">
+          <button>Tambah</button>
+        </div>
+
+        <div class="link">
+          <a class="home" href="../dashboard-admin/">Kembali ke Beranda</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document.tambahMobil.onsubmit = async (e) => {
+        e.preventDefault();
+        const data = new FormData();
+        data.append("tahun", document.tambahMobil.tahun.value);
+        data.append("tipe", document.tambahMobil.tipe.value);
+        data.append("hargaPerhari", document.tambahMobil.hargaPerhari.value);
+        data.append("img-upload", document.tambahMobil.photo.files[0]);
+        await fetch("/api/tambahmobil", {
+          method: "POST",
+          body: data,
+        }).then(async (response) => {
+          if (response.ok) {
+            const message = await response.text();
+            alert(message);
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

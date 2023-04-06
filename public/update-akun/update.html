@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Masuk</title>
-    <link rel="stylesheet" type="text/css" href="login.css" />
+    <title>Update Akun</title>
+    <link rel="stylesheet" type="text/css" href="update.css" />
 
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
@@ -27,11 +27,11 @@
   <body>
     <div class="container">
       <div class="login">
-        <form name="login" class="parent">
-          <h1>Login Form</h1>
+        <form name="edit" class="parent">
+          <h1>Update Akun</h1>
           <hr />
           <p>BRC WEBSITE</p>
-          <label>Username</label>
+          <label>Username Baru</label>
           <input
             name="username"
             class="user-id"
@@ -40,55 +40,42 @@
             required
             autofocus
           />
-          <label>Password</label>
+          <label>Kata Sandi Baru</label>
           <input
-            name="pass"
+            name="password"
             class="user-pass"
             type="password"
-            placeholder="Password"
+            placeholder="Kata Sandi"
             required
           />
-          <button class="submiting">Login</button>
-
-          <p class="rgs">
-            <a href="http://localhost:3000/register"
-              >Belum punya akun? Register!</a
-            >
-          </p>
+          <button class="submiting">Ubah Data</button>
+          <a class="home" href="/">Kembali ke Beranda</a>
         </form>
       </div>
+
       <div class="right">
-        <img
-          src="https://imgd.aeplcdn.com/0x0/ec/25/B0/8108/img/l/Left-Side-View-30097.jpg?20142708161439&q=75"
-          alt=""
-        />
+        <img src="../assets/img/car-red.png" alt="" />
       </div>
     </div>
 
     <script>
-      document.login.onsubmit = (e) => {
+      document.edit.onsubmit = async (e) => {
         e.preventDefault();
-        const username = document.login.username.value;
-        const pass = document.login.pass.value;
-        fetch("/api/login", {
-          method: "POST",
+        const username = document.edit.username.value;
+        const password = document.edit.password.value;
+        await fetch("/api/updateakun/", {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
             username,
-            pass,
+            password,
           }),
-        }).then(async (response) => {
-          if (response.ok) {
-            const x = await response.text();
-            alert(x);
-            location.href = "/";
-          } else {
-            const message = await response.text();
-            alert(message);
-          }
         });
+        if (confirm(`Apakah perubahan sudah sesuai?`)) {
+          location.href = "/login";
+        }
       };
     </script>
   </body>

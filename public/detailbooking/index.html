@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <table class="content-table">
+      <h2>Info Booking</h2>
+      <thead>
+        <tr>
+          <th name="idPemesanan">id_pemesanan</th>
+          <th name="tglJemput">Tanggal Jemput</th>
+          <th name="destinasi">Destinasi</th>
+          <th name="jmlPenumpang">Jml. Penumpang</th>
+          <th name="noTelp">No. Telp</th>
+          <th name="alamatJemput">Alamat Penjemputan</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <a href="/"><h2>Kembali ke Beranda</h2></a>
+    <script>
+      fetch("/api/booking")
+        .then((response) => response.json())
+        .then(async (data) => {
+          for (let i = 0; i < data.length; i++) {
+            const tr = document.createElement("tr");
+
+            const id_pemesanan = document.createElement("td");
+            id_pemesanan.textContent = data[i].id;
+            tr.appendChild(id_pemesanan);
+
+            const tdJemput = document.createElement("td");
+            tdJemput.textContent = new Date(
+              data[i].tanggal_jemput
+            ).toLocaleString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
+            tr.appendChild(tdJemput);
+
+            const tdDestinasi = document.createElement("td");
+
+            const response = await fetch(`/api/kota/${data[i].kota_id}`);
+            const kota = await response.json();
+
+            tdDestinasi.textContent = kota.nama_kota;
+            tr.appendChild(tdDestinasi);
+
+            const tdJmlPenumpang = document.createElement("td");
+            tdJmlPenumpang.textContent = data[i].jml_penumpang;
+            tr.appendChild(tdJmlPenumpang);
+
+            const tdNoTelp = document.createElement("td");
+            tdNoTelp.textContent = data[i].no_telp;
+            tr.appendChild(tdNoTelp);
+
+            const tdAlamat = document.createElement("td");
+            tdAlamat.textContent = data[i].alamat;
+            tr.appendChild(tdAlamat);
+
+            const tdEdit = document.createElement("td");
+            const anchorEdit = document.createElement("a");
+            anchorEdit.textContent = "Ubah Tanggal";
+            anchorEdit.href = `/ubah-tanggal/update.html?id=${data[i].id}`;
+            tdEdit.appendChild(anchorEdit);
+            tr.appendChild(tdEdit);
+
+            const tdDelete = document.createElement("td");
+            const buttonDelete = document.createElement("button");
+            buttonDelete.textContent = "Batalkan";
+            buttonDelete.onclick = () => {
+              if (confirm(`Apakah anda ingin membatalkan perjalanan ini?`)) {
+                fetch(`/api/booking/${data[i].id}`, {
+                  method: "DELETE",
+                });
+                location.reload();
+              }
+            };
+            tdDelete.appendChild(buttonDelete);
+            tr.appendChild(tdDelete);
+
+            document.querySelector("tbody").appendChild(tr);
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="pemesanan.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Pemesanan</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Pemesanan</div>
+      <form name="pemesanan">
+        <div class="inputfield">
+          <label>Tanggal Berangkat</label>
+          <input
+            type="text"
+            name="tanggalBerangkat"
+            placeholder="dd-mm-yyyy"
+            disabled
+          />
+        </div>
+
+        <div class="inputfield">
+          <label>Destinasi</label>
+          <input type="text" name="destinasi" placeholder="Kota" disabled />
+        </div>
+        <div class="inputfield">
+          <label>Jml. Penumpang</label>
+          <input
+            type="number"
+            max="6"
+            name="jumlahPenumpang"
+            placeholder="Max. 6 Org"
+          />
+        </div>
+        <div class="inputfield">
+          <label>Nomor Telepon</label>
+          <input type="text" name="noHp" placeholder="0818XXXXXXXX" />
+        </div>
+        <div class="inputfield">
+          <label>Alamat</label>
+          <textarea
+            name="alamatSekarang"
+            class="textarea"
+            placeholder="Masukkan Alamat Penjemputan"
+          ></textarea>
+        </div>
+        <div class="inputfield">
+          <label>Jumlah Bayar</label>
+          <input type="number" name="jumlahBayar" placeholder="Rp. " disabled />
+        </div>
+        <div class="inputfield">
+          <label>Metode Pembayaran</label>
+          <input list="bayar" name="metodeBayar" required />
+          <datalist id="bayar">
+            <option value="Dana"></option>
+            <option value="Transfer Bank"></option>
+          </datalist>
+        </div>
+        <div class="inputfield terms">
+          <label class="check">
+            <input type="checkbox" required />
+            <span class="checkmark"></span>
+          </label>
+          <p>Menyetujui Syarat & Ketentuan.</p>
+        </div>
+        <div class="inputfield">
+          <button>Pesan Sekarang!</button>
+        </div>
+
+        <div class="link">
+          <a class="home" href="/">Kembali ke Beranda</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const tanggalBerangkat = (document.pemesanan.tanggalBerangkat.value =
+        params.get("tglJemput"));
+      const destinasi = params.get("destinasi");
+      const alamat = (document.pemesanan.alamatSekarang.value =
+        params.get("alamat"));
+
+      fetch(`/api/kota/${destinasi}`)
+        .then((response) => response.json())
+        .then((kota) => {
+          document.pemesanan.destinasi.value = kota.nama_kota;
+          document.pemesanan.jumlahBayar.value = kota.tarif;
+        });
+
+      document.pemesanan.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const jumlahPenumpang = document.pemesanan.jumlahPenumpang.value;
+        const noHp = document.pemesanan.noHp.value;
+        const jumlahBayar = document.pemesanan.jumlahBayar.value;
+        const metodeBayar = document.pemesanan.metodeBayar.value;
+
+        await fetch("/api/booking", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tanggalBerangkat,
+            kotaId: destinasi,
+            jumlahPenumpang,
+            noHp,
+            alamat,
+            jumlahBayar,
+            metodeBayar,
+          }),
+        });
+        location.href = "/detailbooking/index.html";
+      };
+    </script>
+  </body>
+</html>
