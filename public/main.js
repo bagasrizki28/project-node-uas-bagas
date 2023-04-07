@@ -74,8 +74,8 @@ fetch("/api/datamobil")
       h2.appendChild(span);
 
       const a = document.createElement("a");
-      a.href = "/pemesanan-rental";
-      a.textContent = "Rental Sekarang";
+      a.href = "#rental";
+      a.textContent = "Kunjungi Sekarang!";
       a.className = "btn";
 
       box.appendChild(boxImg);

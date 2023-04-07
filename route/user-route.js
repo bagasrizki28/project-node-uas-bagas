@@ -37,7 +37,7 @@ export async function bacaAkun(req, res) {
 }
 
 export async function tombolLogout(req, res) {
-  // res.setHeader("Cache-Control", "no-store"); // khusus Vercel
+  res.setHeader("Cache-Control", "no-store"); // khusus Vercel
   res.clearCookie("token");
   res.send("Logout berhasil.");
 }
