@@ -13,8 +13,6 @@ create table users (
 );
 
 
-insert into admins (username, password) values ('BagasRizky', '')
-
 insert into users ( username, email, password, no_hp, alamat, admin) values
 	('Bagas', 'bagasrizki123@gmail.com','$2a$10$4CG53wXWiXTFIUa2rJ5uzO3yYWYEswo.Kq3Gr9jv4Qua8K1tAG8ki', '0888123' ,'Banjar',  true),
 	('Rey', 'rey123@gmail.com','123', '0888123' ,'Sibolga', false);

@@ -57,12 +57,12 @@ app.use((req, res, next) => {
       }
     }
     if (req.user) {
-      if (req.path.startsWith("/login") || req.path.startsWith("/register")) {
-        if (req.user.admin) {
-          res.redirect("/dashboard-admin");
-        } else {
-          res.redirect("/");
-        }
+      if (
+        req.path.startsWith("/login") ||
+        req.path.startsWith("/register") ||
+        req.path.includes("admin")
+      ) {
+        res.redirect("/");
       } else {
         next();
       }
