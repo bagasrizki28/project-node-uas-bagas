@@ -10,6 +10,7 @@ create table users (
 	password text,
 	no_hp char(13),
 	alamat text,
+	admin boolean
 );
 
 
